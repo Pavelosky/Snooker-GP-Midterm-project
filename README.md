@@ -57,8 +57,5 @@ You should complete this work using the libs shown in the module. Do not use ext
 3. Use an alternative video submission link to upload the video demo to YouTube or similar, then submit the URL only in the third prompt.
 4. Merge all your .js code into a single file, then upload it in the last prompt. Use the JavaScript Bundler Tool (see previous learning item) to merge all your .js files into a single .txt file. Exclude any libraries you used such as p5.js, Matter.js, etc. This is a submission requirement as we need this to run your code.
 
-**Rubric:**
-*(Details of the rubric have been preserved, but you may need to adjust formatting based on your preferences and platform requirements.)*
-```
 
-This Markdown conversion should provide a clear and organized representation of the given information.
+
