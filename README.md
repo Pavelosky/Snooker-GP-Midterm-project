@@ -1,6 +1,4 @@
-Sure, I'll help you convert the provided text into Markdown. Here's the formatted text:
 
-```markdown
 # BSc Computer Science
 ## CM2030 – Graphics Processing
 ### Midterm Coursework: A Snooker App
@@ -9,9 +7,9 @@ Sure, I'll help you convert the provided text into Markdown. Here's the formatte
 During the course so far, we have developed a number of graphics applications using P5js. For this assignment, you are tasked with developing a snooker app. You have to draw the snooker table with pockets, lines etc., add the balls and the cue. A standard full-size snooker table measures 12 ft × 6 ft. Here you choose the size of the table in pixels, but you should maintain the ratio, i.e., length of the table = width of the table / 2.
 
 The ball size is approximately 2 inches in diameter so you could use the formula below:
-```markdown
+
 ball diameter = table width / 36.
-```
+
 The pocket size should be 1.5 times the size of the ball’s diameter. Use the Snooker wiki ([Snooker Wiki](https://en.wikipedia.org/wiki/Snooker)) for more detailed information so you can complete the table as seen below.
 
 ![Snooker Table](screenshot_134.png)
