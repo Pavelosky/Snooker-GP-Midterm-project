@@ -44,6 +44,7 @@ function draw() {
     stroke(255)
     line(tableWidth/4, 0, tableWidth/4, tableHeight)
     arc(tableWidth/4, tableHeight/2, 75, 75, PI*0.5, PI*1.5, CHORD)
+    
     noStroke()
     fill(50)
     drawVertices(cushion.vertices)
