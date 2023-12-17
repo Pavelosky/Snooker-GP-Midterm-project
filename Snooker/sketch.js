@@ -5,30 +5,28 @@ Bodies = Matter.Bodies,
 Composite = Matter.Composite;
 Constraint = Matter.Constraint;
 
-
+let table;
+let tableWidth = 600;
+let tableHeight = 300;
 let ball;
 let balls = [];
 let ballWidth;
 let pocketSize;
-let sideWall
-let verticesSet
-let tableWidth = 900;
-let tableHeight = 450;
+
 
 
 function setup() {
     createCanvas(tableWidth,tableHeight);
-    background(200,100,100);
     
     rectMode(CENTER);
 
     ballWidth = tableWidth/36
     pocketSize = ballWidth*1.5;
     let verticesCushion = [
-        { x: tableWidth / 4, y: tableHeight+20},
-        { x: tableWidth *3/4, y: tableHeight+20},
-        { x: tableWidth *3/4 - 20, y: tableHeight}, // Adjust these vertices as needed
-        { x: tableWidth / 4 + 20, y: tableHeight},
+        { x: (tableWidth / 4) +5, y: tableHeight+20},
+        { x: (tableWidth *3/4) -5, y: tableHeight+20},
+        { x: tableWidth *3/4 - 25, y: tableHeight},
+        { x: tableWidth / 4 + 25, y: tableHeight},
       ];
 
     cushion = Matter.Bodies.fromVertices(tableWidth * 1/4, tableHeight, verticesCushion, { isStatic: true });
@@ -41,7 +39,13 @@ function setup() {
 
 function draw() {
     fill(44,130,87);
-    fill(100)
+    
+    rect(tableWidth/2, tableHeight/2, tableWidth, tableHeight)
+    stroke(255)
+    line(tableWidth/4, 0, tableWidth/4, tableHeight)
+    arc(tableWidth/4, tableHeight/2, 75, 75, PI*0.5, PI*1.5, CHORD)
+    noStroke()
+    fill(50)
     drawVertices(cushion.vertices)
     drawVertices(cushion2.vertices)
     drawVertices(cushion3.vertices)
