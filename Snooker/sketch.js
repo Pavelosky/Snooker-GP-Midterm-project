@@ -49,8 +49,8 @@ function draw() {
     
     rect(tableWidth/2, tableHeight/2, tableWidth, tableHeight)
     stroke(255)
-    line(tableWidth/4, 0, tableWidth/4, tableHeight)
-    arc(tableWidth/4, tableHeight/2, 75, 75, PI*0.5, PI*1.5, CHORD)
+    line(tableWidth/5, 0, tableWidth/5, tableHeight)
+    arc(tableWidth/5, tableHeight/2, tableHeight/3, tableHeight/3, PI*0.5, PI*1.5, CHORD)
     
     noStroke()
     fill(50)
