@@ -3,11 +3,14 @@ Render = Matter.Render,
 Runner = Matter.Runner,
 Bodies = Matter.Bodies,
 Composite = Matter.Composite;
+Body = Matter.Body;
 Constraint = Matter.Constraint;
 
 let table;
-let tableWidth = 600;
-let tableHeight = 300;
+// to change the size of the table change only tableHeight, rest is scaled to it.
+let tableHeight = 600;
+let tableWidth = tableHeight*2;
+
 let ball;
 let balls = [];
 let ballWidth;
@@ -24,10 +27,10 @@ function setup() {
     ballWidth = tableWidth/36
     pocketSize = ballWidth*1.5;
     let verticesCushion = [
-        { x: (tableWidth / 4) +5, y: tableHeight+20},
-        { x: (tableWidth *3/4) -5, y: tableHeight+20},
-        { x: tableWidth *3/4 - 25, y: tableHeight},
-        { x: tableWidth / 4 + 25, y: tableHeight},
+        { x: (tableWidth / 4) + (tableWidth/120), y: tableHeight+(tableHeight/15)},
+        { x: (tableWidth *3/4) -(tableWidth/120), y: tableHeight+(tableHeight/15)},
+        { x: tableWidth *3/4 - (tableWidth/24), y: tableHeight},
+        { x: tableWidth / 4 + (tableWidth/24), y: tableHeight},
       ];
 
     ball = Matter.Bodies.circle(tableWidth/2,tableHeight/2, ballWidth/2, {restituton:0.5, friction: 0.01});
@@ -37,6 +40,7 @@ function setup() {
     cushion4 = Matter.Bodies.fromVertices(tableWidth * 3/4, 0, verticesCushion, { isStatic: true, angle: PI});
     cushion5 = Matter.Bodies.fromVertices(tableWidth, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*1.5});
     cushion6 = Matter.Bodies.fromVertices(0, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*0.5});
+    Composite.add(engine.world, [cushion, cushion2, cushion3, cushion4, cushion5, cushion6, ball]);
     
     for (let i = 0; i < 7; i++) {
         generateBalls()
@@ -46,6 +50,8 @@ function setup() {
 
 function draw() {
     fill(44,130,87);
+
+    Engine.update(engine)
     
     rect(tableWidth/2, tableHeight/2, tableWidth, tableHeight)
     stroke(255)
