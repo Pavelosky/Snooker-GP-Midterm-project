@@ -104,7 +104,7 @@ function draw() {
 
 function generateBalls(x,y){
 
-    let b = Bodies.circle(random(0,tableWidth), random(0,tableHeight), ballWidth/2, {restituton:0.01, friction: 0.1});
+    let b = Bodies.circle(random(0,tableWidth), random(0,tableHeight), ballWidth/2, {restitution:0.5, friction: 0.1});
     balls.push(b)
     Composite.add(engine.world, [b]);
 }
@@ -122,7 +122,7 @@ function mousePressed(){
 }
 
 
-function drawVertices(vertices){
+function drawVertices(vertices){ 
     beginShape();
     for (let i = 0; i < vertices.length; i++) {
         vertex(vertices[i].x, vertices[i].y);
