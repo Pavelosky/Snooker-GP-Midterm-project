@@ -8,7 +8,7 @@ Constraint = Matter.Constraint;
 
 let table;
 // to change the size of the table change only tableHeight, rest is scaled to it.
-let tableHeight = 400;
+let tableHeight = 600;
 let tableWidth = tableHeight*2;
 
 let ball;
@@ -63,15 +63,10 @@ function draw() {
 
     Engine.update(engine)
     
-    
     rect(tableWidth/2, tableHeight/2, tableWidth, tableHeight)
     stroke(255)
     line(tableWidth/5, 0, tableWidth/5, tableHeight)
     arc(tableWidth/5, tableHeight/2, tableHeight/3, tableHeight/3, PI*0.5, PI*1.5, CHORD)
-    
-
-    // Update cue ball position based on mouse
-    // Body.setPosition(cueBall, { x: mouseX, y: mouseY });
 
     // draw white ball
     fill(255);
@@ -129,11 +124,10 @@ function generateBalls(x,y){
 }
 
 function mousePressed(){
-    // Calculate the direction vector
+    // Calculate the direction and magnitude of the velocity
     let direction = createVector(cueBall.position.x - cue.position.x, cueBall.position.y - cue.position.y);
     let velocityMagnitude = createVector(mouseX - cueBall.position.x, mouseY - cueBall.position.y).mag() / 10;
     
-    // Normalize the direction vector
     direction.normalize();
     
     // Set the velocity of the cueBall
