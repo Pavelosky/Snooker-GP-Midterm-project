@@ -63,6 +63,7 @@ function draw() {
 
     Engine.update(engine)
     
+    
     rect(tableWidth/2, tableHeight/2, tableWidth, tableHeight)
     stroke(255)
     line(tableWidth/5, 0, tableWidth/5, tableHeight)
@@ -97,14 +98,32 @@ function draw() {
     // Draw cue
     fill(139, 69, 19); 
     let angle = atan2(mouseY - cueBall.position.y, mouseX - cueBall.position.x);
-    Body.setPosition(cue, { x: cueBall.position.x - cueLength * cos(angle), y: cueBall.position.y - cueLength * sin(angle) });
+    Body.setPosition(cue, { x: cueBall.position.x - cueLength * cos(angle) *-1, y: cueBall.position.y - cueLength * sin(angle)* -1 });
     Body.setAngle(cue, angle);
     drawVertices(cue.vertices);
+
+    // Draw direction vector
+    stroke(255, 255, 255);
+    strokeWeight(3);
+    line(cueBall.position.x, cueBall.position.y, cueBall.position.x - (mouseX - cueBall.position.x), cueBall.position.y - (mouseY - cueBall.position.y));
+
+    noStroke()
+    strokeWeight(1)
+
+    // Draw pockets
+    fill(0)
+    ellipse(0, 0, pocketSize)
+    ellipse(tableWidth, 0, pocketSize)
+    ellipse(0, tableHeight, pocketSize)
+    ellipse(tableWidth, tableHeight, pocketSize)
+    ellipse(tableWidth/2, 0, pocketSize)
+    ellipse(tableWidth/2, tableHeight, pocketSize)  
+
+
 }
 
 function generateBalls(x,y){
-
-    let b = Bodies.circle(random(0,tableWidth), random(0,tableHeight), ballWidth/2, {restitution:0.5, friction: 0.1});
+    let b = Bodies.circle(random(0,tableWidth), random(0,tableHeight), ballWidth/2, {restitution:0.5, friction: 0.01});
     balls.push(b)
     Composite.add(engine.world, [b]);
 }
