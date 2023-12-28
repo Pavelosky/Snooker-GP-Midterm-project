@@ -69,7 +69,7 @@ function draw() {
     
 
     // Update cue ball position based on mouse
-    Body.setPosition(cueBall, { x: mouseX, y: mouseY });
+    // Body.setPosition(cueBall, { x: mouseX, y: mouseY });
 
     // draw white ball
     fill(255);
@@ -95,15 +95,15 @@ function draw() {
 
     // Draw cue
     fill(139, 69, 19); 
+    let angle = atan2(mouseY - cueBall.position.y, mouseX - cueBall.position.x);
+    Body.setPosition(cue, { x: cueBall.position.x - cueLength * cos(angle), y: cueBall.position.y - cueLength * sin(angle) });
+    Body.setAngle(cue, angle);
     drawVertices(cue.vertices);
-    Body.setPosition(cue, { x: cueBall.position.x - cueLength, y: cueBall.position.y });
-
-
 }
 
 function generateBalls(x,y){
 
-    let b = Bodies.circle(random(0,tableWidth), random(0,tableHeight), ballWidth/2, {restituton:0.5, friction: 0.01});
+    let b = Bodies.circle(random(0,tableWidth), random(0,tableHeight), ballWidth/2, {restituton:0.01, friction: 0.1});
     balls.push(b)
     Composite.add(engine.world, [b]);
 }
