@@ -20,6 +20,7 @@ let pocketSize;
 let cue;
 let cueLength;
 
+
 function setup() {
     createCanvas(tableWidth,tableHeight);
     engine = Engine.create();
@@ -43,12 +44,12 @@ function setup() {
     ball = Matter.Bodies.circle(tableWidth/2,tableHeight/2, ballWidth/2, {restitution:0.5, friction: 0.01});
     cue = Matter.Bodies.rectangle(cueBall.position.x - cueLength / 2 - 20, cueBall.position.y, cueLength, 5, { isStatic: true });
 
-    cushion = Matter.Bodies.fromVertices(tableWidth * 1/4, tableHeight, verticesCushion, { isStatic: true });
-    cushion2 = Matter.Bodies.fromVertices(tableWidth * 3/4, tableHeight, verticesCushion, { isStatic: true });
-    cushion3 = Matter.Bodies.fromVertices(tableWidth * 1/4, 0, verticesCushion, { isStatic: true, angle: PI});
-    cushion4 = Matter.Bodies.fromVertices(tableWidth * 3/4, 0, verticesCushion, { isStatic: true, angle: PI});
-    cushion5 = Matter.Bodies.fromVertices(tableWidth, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*1.5});
-    cushion6 = Matter.Bodies.fromVertices(0, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*0.5});
+    cushion = Matter.Bodies.fromVertices(tableWidth * 1/4, tableHeight, verticesCushion, { isStatic: true,restitution: 0.5, friction: 0.01 });
+    cushion2 = Matter.Bodies.fromVertices(tableWidth * 3/4, tableHeight, verticesCushion, { isStatic: true,restitution: 0.5, friction: 0.01 });
+    cushion3 = Matter.Bodies.fromVertices(tableWidth * 1/4, 0, verticesCushion, { isStatic: true, angle: PI, restitution: 0.5, friction: 0.01});
+    cushion4 = Matter.Bodies.fromVertices(tableWidth * 3/4, 0, verticesCushion, { isStatic: true, angle: PI, restitution: 0.5, friction: 0.01});
+    cushion5 = Matter.Bodies.fromVertices(tableWidth, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*1.5, restitution: 0.5, friction: 0.01});
+    cushion6 = Matter.Bodies.fromVertices(0, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*0.5, restitution: 0.5, friction: 0.01});
     Composite.add(engine.world, [cushion, cushion2, cushion3, cushion4, cushion5, cushion6, ball, cueBall]);
     
     for(let i = 0; i < 7; i++){
@@ -106,6 +107,18 @@ function generateBalls(x,y){
     let b = Bodies.circle(random(0,tableWidth), random(0,tableHeight), ballWidth/2, {restituton:0.01, friction: 0.1});
     balls.push(b)
     Composite.add(engine.world, [b]);
+}
+
+function mousePressed(){
+    // Calculate the direction vector
+    let direction = createVector(cueBall.position.x - cue.position.x, cueBall.position.y - cue.position.y);
+    let velocityMagnitude = createVector(mouseX - cueBall.position.x, mouseY - cueBall.position.y).mag() / 10;
+    
+    // Normalize the direction vector
+    direction.normalize();
+    
+    // Set the velocity of the cueBall
+    Body.setVelocity(cueBall, { x: direction.x * velocityMagnitude/2, y: direction.y * velocityMagnitude/2 });
 }
 
 
