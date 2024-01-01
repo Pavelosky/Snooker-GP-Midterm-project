@@ -40,7 +40,7 @@ function setup() {
         { x: tableWidth / 4 + (tableWidth/24), y: tableHeight},
       ];
 
-    cueBall = Matter.Bodies.circle(tableWidth / 2, tableHeight / 2, cueBallRadius, { restitution: 0.5, friction: 0.01 });
+    cueBall = Matter.Bodies.circle(tableWidth / 5, tableHeight / 2 -50, cueBallRadius, { restitution: 0.5, friction: 0.01 });
     ball = Matter.Bodies.circle(tableWidth/2,tableHeight/2, ballWidth/2, {restitution:0.5, friction: 0.01});
     cue = Matter.Bodies.rectangle(cueBall.position.x - cueLength / 2 - 20, cueBall.position.y, cueLength, 5, { isStatic: true });
 
@@ -57,27 +57,39 @@ function setup() {
     //     generateBalls(random(0, width), random(0, height))
     // }
 
-    //   First row of balls
-    generateBalls(25 + tableWidth* 3/4 + ballWidth, height/2)
-    //   Second row of balls
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*2, height/2- ballWidth/2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*2, height/2+ ballWidth/2)
-    //   Third row of balls
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, height/2- ballWidth)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, height/2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, height/2+ ballWidth)
-    //   Fourth row of balls
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, height/2- ballWidth/2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, height/2+ ballWidth/2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, height/2- ballWidth*1.5)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, height/2+ ballWidth*1.5)
-    //   Fifth row of balls 
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, height/2- ballWidth)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, height/2+ ballWidth)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, height/2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, height/2- ballWidth*2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, height/2+ ballWidth*2)
     
+    //   First row of balls
+    generateBalls(25 + tableWidth* 3/4 + ballWidth, tableHeight/2)
+    //   Second row of balls
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*2, tableHeight/2- ballWidth/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*2, tableHeight/2+ ballWidth/2)
+    //   Third row of balls
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, tableHeight/2- ballWidth)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, tableHeight/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, tableHeight/2+ ballWidth)
+    //   Fourth row of balls
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2- ballWidth/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2+ ballWidth/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2- ballWidth*1.5)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2+ ballWidth*1.5)
+    //   Fifth row of balls 
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2- ballWidth)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2+ ballWidth)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2- ballWidth*2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2+ ballWidth*2)
+
+    
+    // fill(0, 128, 0);
+    // generateBalls(tableWidth/5, tableHeight/3)
+    fill(165, 42, 42);
+    generateBalls(tableWidth/5, tableHeight/3*2)
+    fill(255, 255, 0);
+    generateBalls(tableWidth/5, tableHeight/2)
+    fill(0, 0, 255);
+    generateBalls(tableWidth/2, tableHeight/2)
+    fill(255, 192, 203);
+    generateBalls(tableWidth/4*3, tableHeight/2)
 
 
 }
@@ -90,14 +102,16 @@ function draw() {
     fill(44,130,87);
     rect(tableWidth/2, tableHeight/2, tableWidth, tableHeight)
     stroke(255)
+
     // Draw lines, arcs and dots
     line(tableWidth/5, 0, tableWidth/5, tableHeight)
     arc(tableWidth/5, tableHeight/2, tableHeight/3, tableHeight/3, PI*0.5, PI*1.5, CHORD)
     strokeWeight(5)
-    point(tableWidth/5, height/2)
-    point(tableWidth/2, height/2)
-    point(tableWidth* 3/4, height/2)
+    point(tableWidth/5, tableHeight/2)
+    point(tableWidth/2, tableHeight/2)
+    point(tableWidth/4 *3, tableHeight/2)
 
+    
     
     noStroke()
     // Draw pockets
