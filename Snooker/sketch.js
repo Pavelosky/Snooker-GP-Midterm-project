@@ -58,25 +58,25 @@ function setup() {
     // }
 
     //   First row of balls
-    generateBalls(tableWidth* 3/4 + ballWidth, height/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth, height/2)
     //   Second row of balls
-    generateBalls(tableWidth* 3/4 + ballWidth*2, height/2- ballWidth/2)
-    generateBalls(tableWidth* 3/4 + ballWidth*2, height/2+ ballWidth/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*2, height/2- ballWidth/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*2, height/2+ ballWidth/2)
     //   Third row of balls
-    generateBalls(tableWidth* 3/4 + ballWidth*3, height/2- ballWidth)
-    generateBalls(tableWidth* 3/4 + ballWidth*3, height/2)
-    generateBalls(tableWidth* 3/4 + ballWidth*3, height/2+ ballWidth)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, height/2- ballWidth)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, height/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, height/2+ ballWidth)
     //   Fourth row of balls
-    generateBalls(tableWidth* 3/4 + ballWidth*4, height/2- ballWidth/2)
-    generateBalls(tableWidth* 3/4 + ballWidth*4, height/2+ ballWidth/2)
-    generateBalls(tableWidth* 3/4 + ballWidth*4, height/2- ballWidth*1.5)
-    generateBalls(tableWidth* 3/4 + ballWidth*4, height/2+ ballWidth*1.5)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, height/2- ballWidth/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, height/2+ ballWidth/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, height/2- ballWidth*1.5)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, height/2+ ballWidth*1.5)
     //   Fifth row of balls 
-    generateBalls(tableWidth* 3/4 + ballWidth*5, height/2- ballWidth)
-    generateBalls(tableWidth* 3/4 + ballWidth*5, height/2+ ballWidth)
-    generateBalls(tableWidth* 3/4 + ballWidth*5, height/2)
-    generateBalls(tableWidth* 3/4 + ballWidth*5, height/2- ballWidth*2)
-    generateBalls(tableWidth* 3/4 + ballWidth*5, height/2+ ballWidth*2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, height/2- ballWidth)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, height/2+ ballWidth)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, height/2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, height/2- ballWidth*2)
+    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, height/2+ ballWidth*2)
     
 
 
@@ -146,9 +146,6 @@ function draw() {
 
     noStroke()
     strokeWeight(1)
-
-    
-
 
 }
 
