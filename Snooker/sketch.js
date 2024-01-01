@@ -52,22 +52,64 @@ function setup() {
     cushion6 = Matter.Bodies.fromVertices(0, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*0.5, restitution: 0.5, friction: 0.01});
     Composite.add(engine.world, [cushion, cushion2, cushion3, cushion4, cushion5, cushion6, ball, cueBall]);
     
-    for(let i = 0; i < 7; i++){
-        generateBalls()
-    }
+    // This for loop generates the balls in random positions
+    // for(let i = 0; i < 15; i++){
+    //     generateBalls(random(0, width), random(0, height))
+    // }
+
+    //   First row of balls
+    generateBalls(tableWidth* 3/4 + ballWidth, height/2)
+    //   Second row of balls
+    generateBalls(tableWidth* 3/4 + ballWidth*2, height/2- ballWidth/2)
+    generateBalls(tableWidth* 3/4 + ballWidth*2, height/2+ ballWidth/2)
+    //   Third row of balls
+    generateBalls(tableWidth* 3/4 + ballWidth*3, height/2- ballWidth)
+    generateBalls(tableWidth* 3/4 + ballWidth*3, height/2)
+    generateBalls(tableWidth* 3/4 + ballWidth*3, height/2+ ballWidth)
+    //   Fourth row of balls
+    generateBalls(tableWidth* 3/4 + ballWidth*4, height/2- ballWidth/2)
+    generateBalls(tableWidth* 3/4 + ballWidth*4, height/2+ ballWidth/2)
+    generateBalls(tableWidth* 3/4 + ballWidth*4, height/2- ballWidth*1.5)
+    generateBalls(tableWidth* 3/4 + ballWidth*4, height/2+ ballWidth*1.5)
+    //   Fifth row of balls 
+    generateBalls(tableWidth* 3/4 + ballWidth*5, height/2- ballWidth)
+    generateBalls(tableWidth* 3/4 + ballWidth*5, height/2+ ballWidth)
+    generateBalls(tableWidth* 3/4 + ballWidth*5, height/2)
+    generateBalls(tableWidth* 3/4 + ballWidth*5, height/2- ballWidth*2)
+    generateBalls(tableWidth* 3/4 + ballWidth*5, height/2+ ballWidth*2)
+    
+
 
 }
 
 function draw() {
-    fill(44,130,87);
 
     Engine.update(engine)
     
+    
+    fill(44,130,87);
     rect(tableWidth/2, tableHeight/2, tableWidth, tableHeight)
     stroke(255)
+    // Draw lines, arcs and dots
     line(tableWidth/5, 0, tableWidth/5, tableHeight)
     arc(tableWidth/5, tableHeight/2, tableHeight/3, tableHeight/3, PI*0.5, PI*1.5, CHORD)
+    strokeWeight(5)
+    point(tableWidth/5, height/2)
+    point(tableWidth/2, height/2)
+    point(tableWidth* 3/4, height/2)
 
+    
+    noStroke()
+    // Draw pockets
+    fill(0)
+    ellipse(0, 0, pocketSize)
+    ellipse(tableWidth, 0, pocketSize)
+    ellipse(0, tableHeight, pocketSize)
+    ellipse(tableWidth, tableHeight, pocketSize)
+    ellipse(tableWidth/2, 0, pocketSize)
+    ellipse(tableWidth/2, tableHeight, pocketSize)  
+
+    strokeWeight(1)
     // draw white ball
     fill(255);
     stroke(50);
@@ -100,25 +142,18 @@ function draw() {
     // Draw direction vector
     stroke(255, 255, 255);
     strokeWeight(3);
-    line(cueBall.position.x, cueBall.position.y, cueBall.position.x - (mouseX - cueBall.position.x), cueBall.position.y - (mouseY - cueBall.position.y));
+    line(cueBall.position.x, cueBall.position.y, cueBall.position.x - (mouseX - cueBall.position.x)*5, cueBall.position.y - (mouseY - cueBall.position.y)*5);
 
     noStroke()
     strokeWeight(1)
 
-    // Draw pockets
-    fill(0)
-    ellipse(0, 0, pocketSize)
-    ellipse(tableWidth, 0, pocketSize)
-    ellipse(0, tableHeight, pocketSize)
-    ellipse(tableWidth, tableHeight, pocketSize)
-    ellipse(tableWidth/2, 0, pocketSize)
-    ellipse(tableWidth/2, tableHeight, pocketSize)  
+    
 
 
 }
 
 function generateBalls(x,y){
-    let b = Bodies.circle(random(0,tableWidth), random(0,tableHeight), ballWidth/2, {restitution:0.5, friction: 0.01});
+    let b = Bodies.circle(x, y, ballWidth/2, {restitution:0.5, friction: 0.01});
     balls.push(b)
     Composite.add(engine.world, [b]);
 }
@@ -126,7 +161,7 @@ function generateBalls(x,y){
 function mousePressed(){
     // Calculate the direction and magnitude of the velocity
     let direction = createVector(cueBall.position.x - cue.position.x, cueBall.position.y - cue.position.y);
-    let velocityMagnitude = createVector(mouseX - cueBall.position.x, mouseY - cueBall.position.y).mag() / 10;
+    let velocityMagnitude = createVector(mouseX - cueBall.position.x, mouseY - cueBall.position.y).mag() / 5;
     
     direction.normalize();
     
