@@ -172,17 +172,21 @@ function draw() {
 
 }
 
-function Ball(x, y, color, width) {
-    this.x = x;
-    this.y = y;
-    this.color = color;
-    this.width = width;
-    this.body = Bodies.circle(this.x, this.y, this.width/2, {restitution:0.5, friction: 0.01});
+// Ball class
+class Ball {
+    constructor(x, y, color, width) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.width = width;
+        this.body = Bodies.circle(this.x, this.y, this.width/2, {restitution:0.5, friction: 0.01});
+    }
 
-    this.addToWorld = function(engine) {
+    addToWorld(engine) {
         Composite.add(engine.world, [this.body]);
     }
 }
+
 
 function generateBalls(x,y){
     let b = Bodies.circle(x, y, ballWidth/2, {restitution:0.5, friction: 0.01});
@@ -191,7 +195,7 @@ function generateBalls(x,y){
 }
 
 function mousePressed(){
-    // Check if the cueBall is not moving
+    // Check if the cueBall is not moving before making new shot
     if (cueBall.velocity.x < 0.01 && cueBall.velocity.y < 0.01) {
         // Calculate the direction and magnitude of the velocity
         let direction = createVector(cueBall.position.x - cue.position.x, cueBall.position.y - cue.position.y);
