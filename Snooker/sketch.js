@@ -41,7 +41,7 @@ function setup() {
 
     cueBall = Matter.Bodies.circle(tableWidth / 5, tableHeight / 2 -50, cueBallRadius, { restitution: 0.5, friction: 0.01 });
     
-    // This ball is now also removed from ythe world
+    // This ball is now also removed from the world
     // ball = Matter.Bodies.circle(tableWidth/2,tableHeight/2, ballWidth/2, {restitution:0.5, friction: 0.01});
 
     cue = Matter.Bodies.rectangle(cueBall.position.x - cueLength / 2 - 20, cueBall.position.y, cueLength, 5, { isStatic: true });
@@ -191,14 +191,17 @@ function generateBalls(x,y){
 }
 
 function mousePressed(){
-    // Calculate the direction and magnitude of the velocity
-    let direction = createVector(cueBall.position.x - cue.position.x, cueBall.position.y - cue.position.y);
-    let velocityMagnitude = createVector(mouseX - cueBall.position.x, mouseY - cueBall.position.y).mag() / 5;
-    
-    direction.normalize();
-    
-    // Set the velocity of the cueBall
-    Body.setVelocity(cueBall, { x: direction.x * velocityMagnitude/2, y: direction.y * velocityMagnitude/2 });
+    // Check if the cueBall is not moving
+    if (cueBall.velocity.x < 0.01 && cueBall.velocity.y < 0.01) {
+        // Calculate the direction and magnitude of the velocity
+        let direction = createVector(cueBall.position.x - cue.position.x, cueBall.position.y - cue.position.y);
+        let velocityMagnitude = createVector(mouseX - cueBall.position.x, mouseY - cueBall.position.y).mag() / 5;
+        
+        direction.normalize();
+        
+        // Set the velocity of the cueBall
+        Body.setVelocity(cueBall, { x: direction.x * velocityMagnitude/2, y: direction.y * velocityMagnitude/2 });
+    }
 }
 
 
