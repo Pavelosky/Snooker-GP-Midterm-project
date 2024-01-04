@@ -11,7 +11,6 @@ let table;
 let tableHeight = 600;
 let tableWidth = tableHeight*2;
 
-let ball;
 let balls = [];
 let cueBall;
 let cueBallRadius;
@@ -41,7 +40,10 @@ function setup() {
       ];
 
     cueBall = Matter.Bodies.circle(tableWidth / 5, tableHeight / 2 -50, cueBallRadius, { restitution: 0.5, friction: 0.01 });
-    ball = Matter.Bodies.circle(tableWidth/2,tableHeight/2, ballWidth/2, {restitution:0.5, friction: 0.01});
+    
+    // This ball is now also removed from ythe world
+    // ball = Matter.Bodies.circle(tableWidth/2,tableHeight/2, ballWidth/2, {restitution:0.5, friction: 0.01});
+
     cue = Matter.Bodies.rectangle(cueBall.position.x - cueLength / 2 - 20, cueBall.position.y, cueLength, 5, { isStatic: true });
 
     cushion = Matter.Bodies.fromVertices(tableWidth * 1/4, tableHeight, verticesCushion, { isStatic: true,restitution: 0.5, friction: 0.01 });
@@ -50,14 +52,15 @@ function setup() {
     cushion4 = Matter.Bodies.fromVertices(tableWidth * 3/4, 0, verticesCushion, { isStatic: true, angle: PI, restitution: 0.5, friction: 0.01});
     cushion5 = Matter.Bodies.fromVertices(tableWidth, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*1.5, restitution: 0.5, friction: 0.01});
     cushion6 = Matter.Bodies.fromVertices(0, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*0.5, restitution: 0.5, friction: 0.01});
-    Composite.add(engine.world, [cushion, cushion2, cushion3, cushion4, cushion5, cushion6, ball, cueBall]);
+    
+    Composite.add(engine.world, [cushion, cushion2, cushion3, cushion4, cushion5, cushion6, cueBall]);
     
     // This for loop generates the balls in random positions
     // for(let i = 0; i < 15; i++){
     //     generateBalls(random(0, width), random(0, height))
     // }
 
-    
+    // Draw red balls - they are drawn separately because they are in a specific position
     //   First row of balls
     generateBalls(25 + tableWidth* 3/4 + ballWidth, tableHeight/2)
     //   Second row of balls
@@ -79,26 +82,25 @@ function setup() {
     generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2- ballWidth*2)
     generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2+ ballWidth*2)
 
+    // Special balls
+    greenBall = new Ball(tableWidth/5, tableHeight/3, 'green', ballWidth);
+    brownBall = new Ball(tableWidth/5, tableHeight/2, 'sienna', ballWidth);
+    yellowBall = new Ball(tableWidth/5, tableHeight/3*2, 'yellow', ballWidth);
+    pinkBall = new Ball(tableWidth/4*3, tableHeight/2, 'pink', ballWidth);
+    blueBall = new Ball(tableWidth/2, tableHeight/2,'blue', ballWidth);
     
-    // fill(0, 128, 0);
-    // generateBalls(tableWidth/5, tableHeight/3)
-    fill(165, 42, 42);
-    generateBalls(tableWidth/5, tableHeight/3*2)
-    fill(255, 255, 0);
-    generateBalls(tableWidth/5, tableHeight/2)
-    fill(0, 0, 255);
-    generateBalls(tableWidth/2, tableHeight/2)
-    fill(255, 192, 203);
-    generateBalls(tableWidth/4*3, tableHeight/2)
-
-
+    greenBall.addToWorld(engine);
+    brownBall.addToWorld(engine);
+    yellowBall.addToWorld(engine);
+    pinkBall.addToWorld(engine);
+    blueBall.addToWorld(engine);
 }
 
 function draw() {
 
     Engine.update(engine)
     
-    
+    // Draw table
     fill(44,130,87);
     rect(tableWidth/2, tableHeight/2, tableWidth, tableHeight)
     stroke(255)
@@ -139,12 +141,19 @@ function draw() {
     drawVertices(cushion5.vertices)
     drawVertices(cushion6.vertices)
 
-    // draw balls
+    stroke(1)
+    // draw red balls
     for (let i = 0; i < balls.length; i++) {
         fill(200, 50, 50)
-        stroke(1)
         drawVertices(balls[i].vertices)
     }
+
+    //draw special balls - colored
+    drawVertices(greenBall.body.vertices, greenBall.color)
+    drawVertices(brownBall.body.vertices, brownBall.color)
+    drawVertices(yellowBall.body.vertices, yellowBall.color)
+    drawVertices(pinkBall.body.vertices, pinkBall.color)
+    drawVertices(blueBall.body.vertices, blueBall.color)
 
     // Draw cue
     fill(139, 69, 19); 
@@ -161,6 +170,18 @@ function draw() {
     noStroke()
     strokeWeight(1)
 
+}
+
+function Ball(x, y, color, width) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.width = width;
+    this.body = Bodies.circle(this.x, this.y, this.width/2, {restitution:0.5, friction: 0.01});
+
+    this.addToWorld = function(engine) {
+        Composite.add(engine.world, [this.body]);
+    }
 }
 
 function generateBalls(x,y){
@@ -181,7 +202,10 @@ function mousePressed(){
 }
 
 
-function drawVertices(vertices){ 
+function drawVertices(vertices, color){ 
+    if(color){
+        fill(color)
+    }
     beginShape();
     for (let i = 0; i < vertices.length; i++) {
         vertex(vertices[i].x, vertices[i].y);
