@@ -19,6 +19,8 @@ let pocketSize;
 let cue;
 let cueLength;
 
+let startScreen = true;
+let selectedMode = "";
 
 function setup() {
     createCanvas(tableWidth,tableHeight);
@@ -40,9 +42,6 @@ function setup() {
       ];
 
     cueBall = Matter.Bodies.circle(tableWidth / 5, tableHeight / 2 -50, cueBallRadius, { restitution: 0.5, friction: 0.01 });
-    
-    // This ball is now also removed from the world
-    // ball = Matter.Bodies.circle(tableWidth/2,tableHeight/2, ballWidth/2, {restitution:0.5, friction: 0.01});
 
     cue = Matter.Bodies.rectangle(cueBall.position.x - cueLength / 2 - 20, cueBall.position.y, cueLength, 5, { isStatic: true });
 
@@ -54,12 +53,15 @@ function setup() {
     cushion6 = Matter.Bodies.fromVertices(0, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*0.5, restitution: 0.5, friction: 0.01});
     
     Composite.add(engine.world, [cushion, cushion2, cushion3, cushion4, cushion5, cushion6, cueBall]);
-    
-    // This for loop generates the balls in random positions
-    // for(let i = 0; i < 15; i++){
-    //     generateBalls(random(0, width), random(0, height))
-    // }
+      
+    if (selectedMode == 'Random') {
+        // This for loop generates the balls in random positions
+        for(let i = 0; i < 15; i++){
+            generateBalls(random(0, width), random(0, height))
+        }
 
+    }
+    else if (selectedMode == '') {
     // Draw red balls - they are drawn separately because they are in a specific position
     //   First row of balls
     generateBalls(25 + tableWidth* 3/4 + ballWidth, tableHeight/2)
@@ -81,6 +83,7 @@ function setup() {
     generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2)
     generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2- ballWidth*2)
     generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2+ ballWidth*2)
+    }
 
     // Special balls
     greenBall = new Ball(tableWidth/5, tableHeight/3, 'green', ballWidth);
@@ -97,7 +100,25 @@ function setup() {
 }
 
 function draw() {
+    if (startScreen) {
+        drawStartScreen();
+    } else {
+        drawGame();
+    }
+}
 
+function drawStartScreen() {
+    background(0);
+    fill(255);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text("Select a mode:", width / 2, height / 2 - 50);
+    textSize(24);
+    text("1. Normal", width* 1/4, height / 2);
+    text("2. Random", width* 3/4, height / 2);
+}
+
+function drawGame() {
     Engine.update(engine)
     
     // Draw table
@@ -114,9 +135,8 @@ function draw() {
     point(tableWidth/4 *3, tableHeight/2)
 
     
-    
-    noStroke()
     // Draw pockets
+    noStroke()
     fill(0)
     ellipse(0, 0, pocketSize)
     ellipse(tableWidth, 0, pocketSize)
@@ -125,8 +145,8 @@ function draw() {
     ellipse(tableWidth/2, 0, pocketSize)
     ellipse(tableWidth/2, tableHeight, pocketSize)  
 
-    strokeWeight(1)
     // draw white ball
+    strokeWeight(1)
     fill(255);
     stroke(50);
     drawVertices(cueBall.vertices);
@@ -141,8 +161,8 @@ function draw() {
     drawVertices(cushion5.vertices)
     drawVertices(cushion6.vertices)
 
-    stroke(1)
     // draw red balls
+    stroke(1)
     for (let i = 0; i < balls.length; i++) {
         fill(200, 50, 50)
         drawVertices(balls[i].vertices)
@@ -167,11 +187,45 @@ function draw() {
     strokeWeight(3);
     line(cueBall.position.x, cueBall.position.y, cueBall.position.x - (mouseX - cueBall.position.x)*5, cueBall.position.y - (mouseY - cueBall.position.y)*5);
 
-    noStroke()
     strokeWeight(1)
 
+    for (let i = balls.length - 1; i >= 0; i--) {
+        let ball = balls[i];
+    
+        // Check if the ball is in a pocket
+        if (isInPocket(ball)) {
+            // Remove the ball from the array
+            balls.splice(i, 1);
+    
+            // Remove the ball from the physics engine world
+            Composite.remove(engine.world, ball.body);
+        }
+    }
 }
 
+function mousePressed(){
+    if (startScreen) {
+        if (mouseX < width / 2) {
+            selectedMode = "Normal";
+            startScreen = false;
+        } else if (mouseX > width / 2) {
+            selectedMode = "Random";
+            startScreen = false;
+        }
+    } else {
+        // Check if the cueBall is not moving before making new shot
+        if (cueBall.velocity.x < 0.01 && cueBall.velocity.y < 0.01) {
+            // Calculate the direction and magnitude of the velocity
+            let direction = createVector(cueBall.position.x - cue.position.x, cueBall.position.y - cue.position.y);
+            let velocityMagnitude = createVector(mouseX - cueBall.position.x, mouseY - cueBall.position.y).mag() / 5;
+            
+            direction.normalize();
+            
+            // Set the velocity of the cueBall
+            Body.setVelocity(cueBall, { x: direction.x * velocityMagnitude/2, y: direction.y * velocityMagnitude/2 });
+        }
+    }
+}
 // Ball class
 class Ball {
     constructor(x, y, color, width) {
@@ -194,20 +248,28 @@ function generateBalls(x,y){
     Composite.add(engine.world, [b]);
 }
 
-function mousePressed(){
-    // Check if the cueBall is not moving before making new shot
-    if (cueBall.velocity.x < 0.01 && cueBall.velocity.y < 0.01) {
-        // Calculate the direction and magnitude of the velocity
-        let direction = createVector(cueBall.position.x - cue.position.x, cueBall.position.y - cue.position.y);
-        let velocityMagnitude = createVector(mouseX - cueBall.position.x, mouseY - cueBall.position.y).mag() / 5;
-        
-        direction.normalize();
-        
-        // Set the velocity of the cueBall
-        Body.setVelocity(cueBall, { x: direction.x * velocityMagnitude/2, y: direction.y * velocityMagnitude/2 });
-    }
-}
+function isInPocket(ball) {
+    // Assuming the pockets are represented as an array of pocket objects with x and y coordinates
+    const pockets = [
+        { x: 0, y: 0 },
+        { x: tableWidth, y: 0 },
+        { x: 0, y: tableHeight },
+        { x: tableWidth, y: tableHeight },
+        { x: tableWidth/2, y: 0 },
+        { x: tableWidth/2, y: tableHeight }
+    ];
 
+    // Check if the ball's position is within the radius of any pocket
+    for (let i = 0; i < pockets.length; i++) {
+        const pocket = pockets[i];
+        const distance = dist(ball.position.x, ball.position.y, pocket.x, pocket.y);
+        if (distance < ballWidth / 2) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 function drawVertices(vertices, color){ 
     if(color){
