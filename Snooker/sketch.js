@@ -158,15 +158,16 @@ function drawGame() {
 
     strokeWeight(1)
 
+    // Check if the ball is in the pocket and remove from the balls array 
     for (let i = balls.length - 1; i >= 0; i--) {
         let ball = balls[i];
-    
         // Check if the ball is in a pocket
         if (isInPocket(ball)) {
             // Remove the ball from the array
             balls.splice(i, 1);
             // Remove the ball from the physics engine world
             Composite.remove(engine.world, ball);
+            console.log(balls)
         }
     }
 }
@@ -176,6 +177,8 @@ function mousePressed(){
         if (mouseX < width / 2) {
             selectedMode = "Normal";
             startScreen = false;
+
+            // this sets the balls in the form of triangle
             generateBalls(25 + tableWidth* 3/4 + ballWidth, tableHeight/2)
             //   Second row of balls
             generateBalls(25 + tableWidth* 3/4 + ballWidth*2, tableHeight/2- ballWidth/2)
@@ -259,7 +262,6 @@ function isInPocket(ball) {
             return true;
         }
     }
-
     return false;
 }
 
