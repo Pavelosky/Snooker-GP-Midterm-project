@@ -53,37 +53,6 @@ function setup() {
     cushion6 = Matter.Bodies.fromVertices(0, tableHeight/2, verticesCushion, { isStatic: true, angle: PI*0.5, restitution: 0.5, friction: 0.01});
     
     Composite.add(engine.world, [cushion, cushion2, cushion3, cushion4, cushion5, cushion6, cueBall]);
-      
-    if (selectedMode == 'Random') {
-        // This for loop generates the balls in random positions
-        for(let i = 0; i < 15; i++){
-            generateBalls(random(0, width), random(0, height))
-        }
-
-    }
-    else if (selectedMode == '') {
-    // Draw red balls - they are drawn separately because they are in a specific position
-    //   First row of balls
-    generateBalls(25 + tableWidth* 3/4 + ballWidth, tableHeight/2)
-    //   Second row of balls
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*2, tableHeight/2- ballWidth/2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*2, tableHeight/2+ ballWidth/2)
-    //   Third row of balls
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, tableHeight/2- ballWidth)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, tableHeight/2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*3, tableHeight/2+ ballWidth)
-    //   Fourth row of balls
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2- ballWidth/2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2+ ballWidth/2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2- ballWidth*1.5)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2+ ballWidth*1.5)
-    //   Fifth row of balls 
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2- ballWidth)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2+ ballWidth)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2- ballWidth*2)
-    generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2+ ballWidth*2)
-    }
 
     // Special balls
     greenBall = new Ball(tableWidth/5, tableHeight/3, 'green', ballWidth);
@@ -196,9 +165,8 @@ function drawGame() {
         if (isInPocket(ball)) {
             // Remove the ball from the array
             balls.splice(i, 1);
-    
             // Remove the ball from the physics engine world
-            Composite.remove(engine.world, ball.body);
+            Composite.remove(engine.world, ball);
         }
     }
 }
@@ -208,10 +176,33 @@ function mousePressed(){
         if (mouseX < width / 2) {
             selectedMode = "Normal";
             startScreen = false;
-        } else if (mouseX > width / 2) {
-            selectedMode = "Random";
-            startScreen = false;
+            generateBalls(25 + tableWidth* 3/4 + ballWidth, tableHeight/2)
+            //   Second row of balls
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*2, tableHeight/2- ballWidth/2)
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*2, tableHeight/2+ ballWidth/2)
+            //   Third row of balls
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*3, tableHeight/2- ballWidth)
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*3, tableHeight/2)
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*3, tableHeight/2+ ballWidth)
+            //   Fourth row of balls
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2- ballWidth/2)
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2+ ballWidth/2)
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2- ballWidth*1.5)
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*4, tableHeight/2+ ballWidth*1.5)
+            //   Fifth row of balls 
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2- ballWidth)
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2+ ballWidth)
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2)
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2- ballWidth*2)
+            generateBalls(25 + tableWidth* 3/4 + ballWidth*5, tableHeight/2+ ballWidth*2)
         }
+    else if (mouseX > width / 2) {
+        selectedMode = "Random";
+        startScreen = false;
+        for(let i = 0; i < 15; i++){
+            generateBalls(random(0, width), random(0, height))
+        }
+    } 
     } else {
         // Check if the cueBall is not moving before making new shot
         if (cueBall.velocity.x < 0.01 && cueBall.velocity.y < 0.01) {
@@ -226,6 +217,7 @@ function mousePressed(){
         }
     }
 }
+
 // Ball class
 class Ball {
     constructor(x, y, color, width) {
