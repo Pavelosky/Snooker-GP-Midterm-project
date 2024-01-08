@@ -1,38 +1,5 @@
-// Student number : 210323041 
 
-// Over the game: 
-// My snooker game has two modes: Normal and Random. ( I run out of time to implement the 3rd one) In the Normal mode, 
-// the balls are in the correct positions, and in the random mode the red balls are in random positions but the colored balls 
-// are still in their correct positions. Mode is selected at the beginning of the game. There are no buttons, but when the user
-//  clicks on the left side of the canvas, Normal mode is selected, and when the click is on the right, the random mode is selected.
-
-// Cue ball and the cue: 
-// At the beginning of the game, the cue ball is placed in one point that is hardcoded to the game. 
-// The cue is always revolving around the cue ball and is following the mouse movement. The strength of the 
-// hit is determined by the distance between the mouse pointer and the cue ball (the further the distance, the harder the hit), 
-// which is also reflected by the white line (a vector) coming out from the cue ball that shows the direction and the magnitude 
-// of the hit. There is no animation of the cue hitting the cue ball. The cue ball can only be hit again after it stops moving. 
-// The red balls are removed from the array and the world when they fall into the pocket. 
-
-// Physics:
-// All the objects (balls, cue ball, cushions) are added to the physics engine and reflect real-world behavior.
-
-// Room for improvement:
-// In this section, I will not talk about the missed requirements for the project, but rather on the things I'd change in the current iteration of the code.
-// 1.  The colored balls are added in the setup() function while they should be added to the program after selecting one of two modes.
-// 2.  The generateBalls() function should be completely replaced by the Ball class. (The idea was to get the physics of the game first and 
-// then improve the code, that's why I wrote the generateBalls() function first)
-// 3.  The code should be split into separate files. Everything now is in one file. While I know and understand the code I 
-// imagine if someone was to inspect the code it would be quite a challenge as it is long.
-// 4.  There should be more comments explaining why the given code is there instead of just informing what it does.
-
-// Extension:
-// There is none. I didn't come up with anything original, I guess I'm not that creative.
-
-// Summary:
-// Even though I missed some of the requirements, I'm pretty happy with the progress that I've made and the way the game works. 
-// My only regret is that I didn't dedicate more time to the project because I know that I have the skills necessary to get it up to the industry standard.
-
+ -------------------- sketch.js ------------------------ 
 
 let Engine = Matter.Engine,
 Render = Matter.Render,
@@ -77,11 +44,10 @@ function setup() {
         { x: tableWidth / 4 + (tableWidth/24), y: tableHeight},
       ];
 
-    // add cueBall
-    cueBall = Matter.Bodies.circle(tableWidth / 5, tableHeight / 2 -30, cueBallRadius, { restitution: 0.5, friction: 0.01 });
-    // add cue
+    cueBall = Matter.Bodies.circle(tableWidth / 5, tableHeight / 2 -50, cueBallRadius, { restitution: 0.5, friction: 0.01 });
+
     cue = Matter.Bodies.rectangle(cueBall.position.x - cueLength / 2 - 20, cueBall.position.y, cueLength, 5, { isStatic: true });
-    // add cushions
+
     cushion = Matter.Bodies.fromVertices(tableWidth * 1/4, tableHeight, verticesCushion, { isStatic: true,restitution: 0.5, friction: 0.01 });
     cushion2 = Matter.Bodies.fromVertices(tableWidth * 3/4, tableHeight, verticesCushion, { isStatic: true,restitution: 0.5, friction: 0.01 });
     cushion3 = Matter.Bodies.fromVertices(tableWidth * 1/4, 0, verticesCushion, { isStatic: true, angle: PI, restitution: 0.5, friction: 0.01});
@@ -139,6 +105,7 @@ function drawGame() {
     point(tableWidth/5, tableHeight/2)
     point(tableWidth/2, tableHeight/2)
     point(tableWidth/4 *3, tableHeight/2)
+
     
     // Draw pockets
     noStroke()
@@ -272,14 +239,13 @@ class Ball {
     }
 }
 
-// Fuction to create new balls
+
 function generateBalls(x,y){
     let b = Bodies.circle(x, y, ballWidth/2, {restitution:0.5, friction: 0.01});
     balls.push(b)
     Composite.add(engine.world, [b]);
 }
 
-// Function that checks if the ball is in the pocket
 function isInPocket(ball) {
     // Assuming the pockets are represented as an array of pocket objects with x and y coordinates
     const pockets = [
@@ -302,7 +268,6 @@ function isInPocket(ball) {
     return false;
 }
 
-// Helper function to drw vertices
 function drawVertices(vertices, color){ 
     if(color){
         fill(color)
