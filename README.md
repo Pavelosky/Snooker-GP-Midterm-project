@@ -3,57 +3,58 @@
 ## CM2030 – Graphics Processing
 ### Midterm Coursework: A Snooker App
 
-**Introduction:**
-During the course so far, we have developed a number of graphics applications using P5js. For this assignment, you are tasked with developing a snooker app. You have to draw the snooker table with pockets, lines etc., add the balls and the cue. A standard full-size snooker table measures 12 ft × 6 ft. Here you choose the size of the table in pixels, but you should maintain the ratio, i.e., length of the table = width of the table / 2.
+# Snooker Game
 
-The ball size is approximately 2 inches in diameter so you could use the formula below:
+![alt text](image.png)
 
-ball diameter = table width / 36.
+## Overview
+This project is a simple snooker game implemented using JavaScript and the Matter.js physics engine. The game features two modes: **Normal** and **Random**. In **Normal** mode, the balls are placed in their correct positions, while in **Random** mode, the red balls are placed randomly, but the colored balls remain in their correct positions. The game is controlled using the mouse, and the cue ball can be hit by clicking and dragging the mouse.
 
-The pocket size should be 1.5 times the size of the ball’s diameter. Use the Snooker wiki ([Snooker Wiki](https://en.wikipedia.org/wiki/Snooker)) for more detailed information so you can complete the table as seen below.
+## Features
+- **Two Game Modes**: Normal and Random.
+- **Cue Ball and Cue**: The cue revolves around the cue ball and follows the mouse movement. The strength of the hit is determined by the distance between the mouse pointer and the cue ball.
+- **Physics Simulation**: All objects (balls, cue ball, cushions) are added to the physics engine and reflect real-world behavior.
+- **Ball Removal**: Red balls are removed from the array and the world when they fall into the pocket.
 
-![Snooker Table](screenshot_134.png)
+## Setup
+1. **Include Matter.js**: The game uses the Matter.js library for physics simulation. Include the following CDN in your HTML file:
+   ```html
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"></script>
+   ```
 
-**Task/Steps:**
-1. Define your variables for the table, balls, and the cue. Store the balls in appropriate arrays.
-2. Draw the snooker table in the middle of the canvas using the correct colors, pockets, and lines as described above.
-3. Draw the balls in three modes:
-    a. Starting positions
-    b. Random positions (reds only)
-    c. Random positions (reds and colored balls) - excluding the cue ball
-4. Give all balls the necessary physics (for bouncing) and friction (for slowing down). You are expected to use Matter.js.
-5. Draw the cue. Options include using the mouse, keyboard, or a combination of them to draw and manipulate the cue so you can hit the cue ball. Adjust the speed of the cue.
-6. The cue ball is also inserted using human interaction as above, i.e., use the right combination of key/mouse, etc.
-7. Cushions should also have the necessary physics properties for bouncing the balls (different from the ones the balls have). You are expected to use Matter.js.
-8. When a red ball is in the pocket, it should be removed from the array.
-9. Define a function for collision detection to prompt the user of the type of impact, e.g., cue-red, cue-colour, cue-cushion. The function should work only for collisions of the cue ball.
+2. **Create a Canvas**: The game is drawn on an HTML canvas. Ensure you have a canvas element in your HTML file:
+   ```html
+   <canvas id="snookerCanvas"></canvas>
+   ```
 
-**Gaming Aspects:**
-1. When the cue ball is in the pocket, it should be given back to the player (run step 6 again).
-2. If a colored ball falls into the pocket, it should be returned to its original location.
-3. If two consecutive colored balls fall into the pocket, then notify the user of this mistake.
+3. **Link the JavaScript File**: Link the `sketch.js` file in your HTML file:
+   ```html
+   <script src="sketch.js"></script>
+   ```
 
-**Coding Style:**
-1. Code presentation: Use appropriate syntax, comments, consistent indentation, and redundant code.
-2. Code competency: Use object orientation, code reusability, use of functions, variables global vs local.
+## How to Play
+1. **Start the Game**: Open the HTML file in a web browser. You will see a start screen with two options: **Normal** and **Random**.
+2. **Select a Mode**: Click on the left side of the canvas to select **Normal** mode or the right side to select **Random** mode.
+3. **Control the Cue**: Move the mouse to control the direction of the cue. Click and drag the mouse to hit the cue ball. The strength of the hit is determined by the distance between the mouse pointer and the cue ball.
+4. **Pocket the Balls**: The goal is to pocket the red balls. When a red ball falls into a pocket, it is removed from the game.
 
-**Extension:**
-Since this is a creative module, we would like to give more marks for implementing further ideas. Also, you should write some words about it in the commentary (see next paragraph). Please note that we will award marks for the uniqueness of your extension and how technically challenging it appears to have been. Please note that we will not award any marks if you decide to develop the snooker app with scoring as this is not a unique extension. Try something novel or innovative that has not been seen in snooker gaming before. The extension is worth 20% of your mark.
+## Code Structure
+- `setup()`: Initializes the game, creates the canvas, and sets up the physics engine.
+- `draw()`: The main game loop that updates the physics engine and draws the game elements.
+- `mousePressed()`: Handles mouse click events to start the game and hit the cue ball.
+- `Ball Class`: Defines the `Ball` class used to create ball objects.
+- `generateBalls()`: Function to create new balls and add them to the game.
+- `isInPocket()`: Function to check if a ball is in a pocket.
+- `drawVertices()`: Helper function to draw the vertices of the game objects.
 
-**Commentary:**
-Explain the app design: e.g., why you used a mouse-based only cue function - how does it work? The report quality (i.e. language) will also be assessed. Also discuss your extension and why it is a unique idea. Be precise and deliver the information within 500 words. Include this in your main .js file.
+## Room for Improvement
+- **Code Organization**: The code should be split into separate files for better organization and readability.
+- **Comments**: More comments should be added to explain the purpose of the code.
+- **Additional Features**: Implement additional game modes and features to enhance the gameplay experience.
 
-**Video Demo:**
-Demonstrate your work using a video. Verbally go through all functionalities and talk about your development decisions. Also talk about your extension. Always have the console window open so any behavior is recorded. We will give zero points to this question if the console is not shown. The video should be up to 5 minutes long.
+## Summary
+This project is a simple snooker game that demonstrates the use of the Matter.js physics engine in a JavaScript application. While there are areas for improvement, the game provides a solid foundation for further development and enhancement.
 
-**General Information:**
-You should complete this work using the libs shown in the module. Do not use external code for this assignment. All your code and commentary will be checked for plagiarism/AI generation.
-
-**Submission Requirements:**
-1. Compress all your code in .ZIP format and upload it in the first prompt.
-2. Upload the video demo in .mp4 format in the second prompt.
-3. Use an alternative video submission link to upload the video demo to YouTube or similar, then submit the URL only in the third prompt.
-4. Merge all your .js code into a single file, then upload it in the last prompt. Use the JavaScript Bundler Tool (see previous learning item) to merge all your .js files into a single .txt file. Exclude any libraries you used such as p5.js, Matter.js, etc. This is a submission requirement as we need this to run your code.
 
 
 
