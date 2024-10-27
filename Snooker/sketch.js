@@ -1,4 +1,8 @@
-// Student number : 210323041 
+// Student number: 210323041 
+
+// IMPORTANT NOTICE:
+// I used a cdn for my matter.js library. Link to the version I used is below.
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.js" integrity="sha512-rsntMCBgWYEWKl4HtqWmQ3vdHgvSq8CTtJd19YL7lCtKokLPWt7UEoHVabK1uiNfUdaLit8O090no5BZjcz+bw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 // Over the game: 
 // My snooker game has two modes: Normal and Random. ( I run out of time to implement the 3rd one) In the Normal mode, 
