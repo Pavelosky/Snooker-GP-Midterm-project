@@ -4,6 +4,7 @@
 ### Midterm Coursework: A Snooker App
 
 # Snooker Game
+Play the game [here](https://pavelosky.github.io/Snooker-GP-Midterm-project/)
 
 ![alt text](image.png)
 
